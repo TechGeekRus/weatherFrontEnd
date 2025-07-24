@@ -1,0 +1,9 @@
+.box {
+  background: #fff2df;
+  margin: 18px 0;
+  padding: 18px;
+  border-radius: 8px;
+}
+.newsItem {
+  margin-bottom: 10px;
+}
