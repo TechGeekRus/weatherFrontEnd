@@ -9,6 +9,7 @@ import Profile from './components/Profile/Profile'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Login from './components/Login/Loginv2'
 import Weather from './components/Weather/Weather'
+import NewsFeed from './components/News/News'
 
 
 function MainRouter({ user, handleLogout, handleLogin }) {
@@ -21,12 +22,12 @@ function MainRouter({ user, handleLogout, handleLogin }) {
                 <Route path='/sign-up' element={<SignUp />}/>
                 <Route path='/login' element={user ? <Navigate to='/weather'/> : <Login handleLogin={handleLogin}/>}/>
                 <Route path='/weather' element={<Weather weatherInput ={weatherInput} />}/>
+                <Route path="/news" element={<NewsFeed />} />
                 <Route path='/profile' element = {
                     <PrivateRoute>
                 <Profile user = {user}/>       
                 </PrivateRoute>
             }/>
-            {/* <Route path='/movie-detail/:id' element={<MovieDetail/>}/>  */}
             </Routes>
         </BrowserRouter>
     )
