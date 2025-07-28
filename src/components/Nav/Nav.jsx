@@ -16,7 +16,7 @@ export default function Nav({ user, handleLogout, weatherInput, setWeatherInput 
           position: 'fixed',
           top: 0,
           left: 0,
-          backgroundColor: 'black',
+          backgroundColor: 'dark purple',
         }}
       >
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
@@ -27,16 +27,30 @@ export default function Nav({ user, handleLogout, weatherInput, setWeatherInput 
               to='/'
               sx={{ color: 'white', textTransform: 'none' }}
             >
-              Home
+             Home
             </Button>
+            
           </Box>
 
           <Box>
             {user ? (
-              <>
+              <><Button
+              component={NavLink}
+              to='/weather'
+              sx={{ color: 'white', textTransform: 'none' }}
+            >
+              Weather
+            </Button>
+            <Button
+              component={NavLink}
+              to='/news'
+              sx={{ color: 'white', textTransform: 'none' }}
+            >
+              News
+            </Button>
                 <Button
                 component={NavLink} 
-                to ={'/profile'}
+                 to ={'/profile'}
                  sx={{ color: 'white', textTransform: 'none' }}>
                   {user.username}
                 </Button>

@@ -1,12 +1,11 @@
-// import React, { useState } from "react"
-// import Weather from "./components/Weather/Weather"
-// import Forecast from "./components/Forecast/Forecast"
-// import News from "./components/News/News"
+import Weather from "./components/Weather/Weather"
+import News from "./components/News/News"
 import React from 'react'
 import { useEffect, useState } from 'react'
 import MainRouter from './MainRouter'
 import { jwtDecode } from 'jwt-decode'
 import { removeAuthToken, setAxiosAuthToken } from './utils/attachHeaders'
+
 
 function App() {
   const [user, setUser] = useState(null)

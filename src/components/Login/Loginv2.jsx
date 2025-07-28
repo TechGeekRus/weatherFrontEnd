@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Box,
   Typography,
@@ -9,58 +9,36 @@ import {
   IconButton
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import Axios from '../../utils/Axios';
 import { setAxiosAuthToken } from '../../utils/attachHeaders';
-import isEmail from 'validator/lib/isEmail';
 
-function Login({ handleLogin }) {
+
+function Login({handleLogin}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
-
+const navigate = useNavigate()
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleOnSubmit = async (e) => {
+  const handleOnSubmit = async(e) => {
     e.preventDefault();
-    const newErrors = {};
-    if (!email) {
-      newErrors.emailError = 'Email must have a value';
-    } else if (!isEmail(email)) {
-      newErrors.emailError = 'Email must be a valid email';
-    }
-
-    if (!password) {
-      newErrors.passwordError = 'Password name must have a value';
-    } else if (password.length < 8) {
-      newErrors.passwordError = 'Password must be at least 8 characters long';
-    }
-
-    setErrors(newErrors);
-    // Validation errors found; don't try to submit
-    if (Object.keys(newErrors).length > 0) return;
-
     try {
-      const response = await Axios.post('/users/login', { email, password });
-      const jwt = response.data.payload;
-      window.localStorage.setItem('weatherJwt', jwt);
-      setAxiosAuthToken(jwt);
-      const user = jwtDecode(jwt);
-      handleLogin(user);
-      navigate('/weather');
-    } catch (error) {
-      // Optionally, you can add error feedback for invalid credentials/server errors
-      setErrors(prev => ({
-        ...prev,
-        serverError: 'Invalid email or password'
-      }));
-      console.log(error);
+        const response = await Axios.post('/users/login',{email, password})
+        const jwt = response.data.payload
+             window.localStorage.setItem('weatherJwt', jwt)
+             setAxiosAuthToken(jwt)
+                    const user = jwtDecode(response.data.payload)
+                    handleLogin(user)
+                    navigate('/weather')
+                  } catch (error) {
+                    console.log(error)
     }
+
   };
 
   return (
@@ -86,12 +64,8 @@ function Login({ handleLogin }) {
         <Typography variant="h4" sx={{ textAlign: 'center', mb: 3, fontWeight: 'bold' }}>
           Login
         </Typography>
-        {errors.serverError && (
-          <Typography color="error" sx={{ mb: 2 }}>
-            {errors.serverError}
-          </Typography>
-        )}
-        <Box component="form" onSubmit={handleOnSubmit} noValidate>
+
+        <Box component="form" onSubmit={handleOnSubmit}>
           <TextField
             fullWidth
             label="Email"
@@ -101,9 +75,7 @@ function Login({ handleLogin }) {
             margin="normal"
             variant="outlined"
             required
-            sx={{ mb: 0.5 }}
-            error={Boolean(errors.emailError)}
-            helperText={errors.emailError}
+            sx={{ mb: 2 }}
           />
 
           <TextField
@@ -121,16 +93,13 @@ function Login({ handleLogin }) {
                   <IconButton
                     onClick={togglePasswordVisibility}
                     edge="end"
-                    tabIndex={-1}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               ),
             }}
-            sx={{ mb: 1.5 }}
-            error={Boolean(errors.passwordError)}
-            helperText={errors.passwordError}
+            sx={{ mb: 3 }}
           />
 
           <Button
@@ -149,7 +118,7 @@ function Login({ handleLogin }) {
         </Box>
       </Paper>
     </Box>
-  );
+  )
 }
 
-export default Login;
+export default Login

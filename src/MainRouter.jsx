@@ -18,7 +18,7 @@ function MainRouter({ user, handleLogout, handleLogin }) {
         <BrowserRouter>
             <Nav user={user} handleLogout={handleLogout} weatherInput={weatherInput} setWeatherInput={setWeatherInput} />
             <Routes>
-                <Route path='/home' element={<Home/>}/>
+                <Route path='/' element={<Home/>}/>
                 <Route path='/sign-up' element={<SignUp />}/>
                 <Route path='/login' element={user ? <Navigate to='/weather'/> : <Login handleLogin={handleLogin}/>}/>
                 <Route path='/weather' element={<Weather weatherInput ={weatherInput} />}/>
