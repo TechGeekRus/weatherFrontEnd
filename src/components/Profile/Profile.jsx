@@ -6,15 +6,16 @@ import {
   Paper,
   Avatar
 } from '@mui/material';
-import { Person } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
-import Axios from '../../utils/Axios';
+import { Person } from '@mui/icons-material'
+import { useEffect} from 'react'
+import Axios from '../../utils/Axios'
+import React, { useState } from 'react'
 
 function Profile() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
 
   useEffect(() => {
     async function getUserInfo(){
@@ -140,7 +141,7 @@ function Profile() {
         </Box>
       </Paper>
     </Box>
-  );
+  )
 }
 
 export default Profile

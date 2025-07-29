@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
-export default function Nav({ user, handleLogout, weatherInput, setWeatherInput }) {
+export default function Nav({ user, handleLogout,}) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -16,7 +16,7 @@ export default function Nav({ user, handleLogout, weatherInput, setWeatherInput 
           position: 'fixed',
           top: 0,
           left: 0,
-          backgroundColor: 'dark purple',
+          backgroundColor: 'dark purple'
         }}
       >
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>

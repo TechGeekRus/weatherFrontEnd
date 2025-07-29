@@ -8,35 +8,35 @@ import {
   InputAdornment,
   IconButton
 } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
-import Axios from '../../utils/Axios';
-import { setAxiosAuthToken } from '../../utils/attachHeaders';
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { useState } from 'react'
+import { jwtDecode } from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
+import Axios from '../../utils/Axios'
+import { setAxiosAuthToken } from '../../utils/attachHeaders'
 
 
-function Login({handleLogin}) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-const navigate = useNavigate()
+function Login({ handleLogin }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
   const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
+    setShowPassword((prev) => !prev)
   };
 
-  const handleOnSubmit = async(e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await Axios.post('/users/login',{email, password})
-        const jwt = response.data.payload
-             window.localStorage.setItem('weatherJwt', jwt)
-             setAxiosAuthToken(jwt)
-                    const user = jwtDecode(response.data.payload)
-                    handleLogin(user)
-                    navigate('/weather')
-                  } catch (error) {
-                    console.log(error)
+      const response = await Axios.post('/users/login', { email, password })
+      const jwt = response.data.payload
+      window.localStorage.setItem('weatherJwt', jwt)
+      setAxiosAuthToken(jwt)
+      const user = jwtDecode(response.data.payload)
+      handleLogin(user)
+      navigate('/weather')
+    } catch (error) {
+      console.log(error)
     }
 
   };
