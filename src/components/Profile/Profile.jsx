@@ -10,6 +10,7 @@ import { Person } from '@mui/icons-material'
 import { useEffect} from 'react'
 import Axios from '../../utils/Axios'
 import React, { useState } from 'react'
+import Layout from '../Layout';
 
 function Profile() {
   const [firstName, setFirstName] = useState('')

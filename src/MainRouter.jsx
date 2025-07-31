@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navigate,  BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Navigate, BrowserRouter, Route, Routes } from 'react-router-dom'
 import SignUp from './components/SignUp/SignUp'
 import Nav from './components/Nav/Nav'
 import Home from './components/Home'
@@ -10,6 +10,8 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Login from './components/Login/Loginv2'
 import Weather from './components/Weather/Weather'
 import NewsFeed from './components/News/News'
+import Layout from './components/Layout'
+
 
 
 function MainRouter({ user, handleLogout, handleLogin }) {
@@ -18,16 +20,19 @@ function MainRouter({ user, handleLogout, handleLogin }) {
         <BrowserRouter>
             <Nav user={user} handleLogout={handleLogout} weatherInput={weatherInput} setWeatherInput={setWeatherInput} />
             <Routes>
-                <Route path='/' element={<Home/>}/>
-                <Route path='/sign-up' element={<SignUp />}/>
-                <Route path='/login' element={user ? <Navigate to='/weather'/> : <Login handleLogin={handleLogin}/>}/>
-                <Route path='/weather' element={<Weather weatherInput ={weatherInput} />}/>
-                <Route path="/news" element={<NewsFeed />} />
-                <Route path='/profile' element = {
+                <Route path='/' element={<Layout><Home /></Layout>} />
+                <Route path='/sign-up' element={<Layout><SignUp /></Layout>} />
+                <Route path='/login' element={
+                    user ? <Navigate to='/weather' /> : <Layout><Login handleLogin={handleLogin} />
+                    </Layout>} />
+                <Route path='/weather' element={<Layout><Weather weatherInput={weatherInput} /></Layout>} />
+                <Route path="/news" element={<Layout><NewsFeed /></Layout>} />
+                <Route path='/profile' element={<Layout>
                     <PrivateRoute>
-                <Profile user = {user}/>       
-                </PrivateRoute>
-            }/>
+                        <Profile user={user} />
+                    </PrivateRoute>
+                </Layout>
+                } />
             </Routes>
         </BrowserRouter>
     )

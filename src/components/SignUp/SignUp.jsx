@@ -11,6 +11,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Axios from '../../utils/Axios'
+import Layout from '../Layout'
 
 
 function SignUp() {
