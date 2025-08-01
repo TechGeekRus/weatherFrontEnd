@@ -11,13 +11,19 @@ import Login from './components/Login/Loginv2'
 import Weather from './components/Weather/Weather'
 import NewsFeed from './components/News/News'
 import Layout from './components/Layout'
+import { CssBaseline } from '@mui/material'
+import { ToastContainer } from 'react-toastify'
 
 
 
 function MainRouter({ user, handleLogout, handleLogin }) {
     const [weatherInput, setWeatherInput] = useState('')
     return (
+
         <BrowserRouter>
+        <CssBaseline/>
+        <ToastContainer position='bottom-center'
+      autoClose= {5000}/>
             <Nav user={user} handleLogout={handleLogout} weatherInput={weatherInput} setWeatherInput={setWeatherInput} />
             <Routes>
                 <Route path='/' element={<Layout><Home /></Layout>} />
@@ -34,6 +40,7 @@ function MainRouter({ user, handleLogout, handleLogin }) {
                 </Layout>
                 } />
             </Routes>
+               
         </BrowserRouter>
     )
 }

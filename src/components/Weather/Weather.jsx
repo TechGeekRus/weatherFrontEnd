@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 import axios from 'axios'
 import { Box } from '@mui/material'
 import { Favorite } from '@mui/icons-material'
-import Layout from '../Layout'
+import { toast, ToastContainer } from 'react-toastify'
 
 
 export function RealTimeApi() {
@@ -21,9 +21,11 @@ export function RealTimeApi() {
       })
       console.log(response)
       setWeatherData(response.data)
+      toast.success('Weather loaded successfully!')
     } catch (error) {
       console.error('Error fetching current weather:', error)
       setWeatherData(null)
+      toast.error('Failed to fetch weather.')
     }
   }
 
@@ -41,8 +43,10 @@ export function RealTimeApi() {
         placeholder="Enter location"
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        onKeyDown={e => { if (e.key === 'Enter') handleSearch(); }}
       />
-      <button onClick={handleSearch}>Search</button> <Box><Favorite/></Box>
+      <button onClick={handleSearch}>Search</button>
+       <Box><Favorite/></Box>
 
       {weatherData && weatherData.location && weatherData.current ? (
         <div>
@@ -60,7 +64,7 @@ export function RealTimeApi() {
           <p>Wind: {weatherData.current.wind_mph} mph</p>
         </div>
       ) : (
-        <p>No data available for "{location}"</p>
+        <p>No data available for '{location}'</p>
       )}
     </div>
   )
@@ -82,9 +86,11 @@ export function ForeCastAPI() {
         params: { q: loc, days: daysCount }
       }) 
      setForecastData(response.data)
+     toast.success('Weather loaded successfully!')
     } catch (error) {
       console.error('Error fetching forecast:', error)
       setForecastData(null)
+      toast.error('Failed to fetch weather.')
     }
   }
 
@@ -102,12 +108,14 @@ export function ForeCastAPI() {
     <div>
       <h2>Weather Forecast</h2>
       <input
-        type="text"
-        placeholder="Enter location"
+        type='text'
+        placeholder='Enter location'
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        onKeyDown={e => { if (e.key === 'Enter') handleSearch() }}
       />
       <button onClick={handleSearch}>Search</button>
+      
       <Box>
         <Favorite/>
       </Box>
@@ -155,23 +163,25 @@ export function ForeCastAPI() {
 
 export default function Weather() {
   return (
-    <div style={{ padding: '40px',
+    <div style={{ 
+      // padding: '40px',
         Height: '100%',
         width:'100%',
-        backgroundImage: "url('/src/assets/Weather.jpg')",
+        backgroundImage: "url(https://www.weather.gov/images/tae/events/20200413/satellite_loop.gif)",
         backgroundRepeat: 'no-repeat',
-        // backgroundSize: 'cover',
-        // backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 20px',
         position: 'static',
         zIndex: 2,
     }}>
+      <ToastContainer/>
       <RealTimeApi />
       <hr />
       <ForeCastAPI />
       <hr />
       <div style={{ position: 'relative',
          width: '100%',
-          height: '600px',
+          height: '100%',
            marginTop: '40px' }}>
       </div>
     </div>

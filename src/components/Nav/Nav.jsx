@@ -32,7 +32,7 @@ export default function Nav({ user, handleLogout,}) {
             
           </Box>
 
-          <Box sx={{marginRight: '60px'}}>
+          <Box sx={{marginRight: '20px'}}>
             {user ? (
               <><Button
               component={NavLink}

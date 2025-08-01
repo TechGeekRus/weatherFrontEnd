@@ -22,8 +22,6 @@ function App() {
         email: currentUser.email
       })
     }
-    return () => {
-    }
   }, [])
 
   const handleLogin = (user) => {

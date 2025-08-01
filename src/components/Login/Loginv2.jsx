@@ -76,6 +76,7 @@ function Login({ handleLogin }) {
             margin="normal"
             variant="outlined"
             required
+            autoComplete='username'
             sx={{ mb: 2 }}
           />
 
@@ -88,6 +89,7 @@ function Login({ handleLogin }) {
             margin="normal"
             variant="outlined"
             required
+            autoComplete='current-password'
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

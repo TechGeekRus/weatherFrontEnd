@@ -7,12 +7,12 @@ function Home() {
       style={{
         minHeight: '100vh',
         minWidth: '100vw',
-        padding: '50px',
+        // padding: '50px',
         fontFamily: 'Arial, sans-serif',
         color: 'white',
         backgroundImage: `url(./src/assets/Home.jpg)`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundPosition: 'center 20%',
         backgroundRepeat: 'no-repeat'
       }}
     >
