@@ -22,8 +22,9 @@ function MainRouter({ user, handleLogout, handleLogin }) {
 
         <BrowserRouter>
         <CssBaseline/>
-        <ToastContainer position='bottom-center'
-      autoClose= {5000}/>
+        <ToastContainer 
+        position='top-center'
+        autoClose= {5000}/>
             <Nav user={user} handleLogout={handleLogout} weatherInput={weatherInput} setWeatherInput={setWeatherInput} />
             <Routes>
                 <Route path='/' element={<Layout><Home /></Layout>} />

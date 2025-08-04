@@ -56,12 +56,14 @@ function SignUp() {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
+        // minHeight: '0%',
+        height: '80%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#f5f5f5',
-        padding: 2
+        padding: 2,
+        zIndex: -1
       }}
     >
       <Paper

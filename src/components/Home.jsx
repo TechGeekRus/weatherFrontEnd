@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 
 function Home() {
@@ -7,7 +7,6 @@ function Home() {
       style={{
         minHeight: '100vh',
         minWidth: '100vw',
-        // padding: '50px',
         fontFamily: 'Arial, sans-serif',
         color: 'white',
         backgroundImage: `url(./src/assets/Home.jpg)`,
@@ -29,4 +28,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Home
