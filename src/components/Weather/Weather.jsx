@@ -1,185 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { Box } from '@mui/material'
+import React, { useState } from 'react'
 import { Favorite } from '@mui/icons-material'
-import { toast, ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
+import RealTimeApi from './RealTimeApi'
+import ForeCastAPI from './ForeCastApi'
 
-function RealTimeApi({ location, setLocation, favorites, toggleFavorite }) {
-  const [weatherData, setWeatherData] = useState(null)
-  const [input, setInput] = useState('')
-
-  useEffect(() => {
-    fetchCurrentWeather(location)
-  }, [location])
-
-  async function fetchCurrentWeather(loc) {
-    try {
-      const response = await axios.get('http://localhost:3000/api/weather/forecast', {
-        params: { q: loc },
-      })
-      setWeatherData(response.data)
-      toast.success('Weather loaded successfully!')
-    } catch (error) {
-      console.error('Error fetching current weather:', error)
-      setWeatherData(null)
-      toast.error('Failed to fetch weather.')
-    }
-  }
-
- function handleSearch() {
-  if (input.trim() !== '') {
-    setLocation(input.trim())
-    setInput('')        
-  }
-}
-
-  return (
-    <div>
-      <h2>Real-Time Weather</h2>
-      <input
-        type="text"
-        placeholder="Enter location"
-        value={input}
-        onChange={e => setInput(e.target.value)}
-        onKeyDown={e => { if (e.key === 'Enter') handleSearch() }}
-      />
-      <button onClick={handleSearch}>Search</button>
-      <Box component="span">
-        <button
-          onClick={() => toggleFavorite(location)}
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            color: favorites.includes(location) ? 'red' : 'grey',
-          }}
-          aria-label={favorites.includes(location) ? 'Remove from favorites' : 'Add to favorites'}
-        >
-          <Favorite />
-        </button>
-      </Box>
-
-      {weatherData && weatherData.location && weatherData.current ? (
-        <div>
-          <h3>
-            {weatherData.location.name}, {weatherData.location.region}
-          </h3>
-          <p>Temperature: {weatherData.current.temp_f}°F</p>
-          <img
-            src={weatherData.current.condition.icon}
-            alt={weatherData.current.condition.text}
-          />
-          <p>Feels Like: {weatherData.current.feelslike_f}°F</p>
-          <p>Heat Index: {weatherData.current.heatindex_f}°F</p>
-          <p>Humidity: {weatherData.current.humidity}%</p>
-          <p>Wind: {weatherData.current.wind_mph} mph</p>
-        </div>
-      ) : (
-        <p>No data available for '{location}'</p>
-      )}
-    </div>
-  )
-}
-
-function ForeCastAPI({ location, setLocation, favorites, toggleFavorite }) {
-  const [forecastData, setForecastData] = useState(null)
-  const [input, setInput] = useState('')
-  const [days, setDays] = useState(3)
-
-  useEffect(() => {
-    fetchForecast(location, days)
-  }, [location, days])
-
-  async function fetchForecast(loc, daysCount) {
-    try {
-      const response = await axios.get('http://localhost:3000/api/weather/forecast', {
-        params: { q: loc, days: daysCount },
-      })
-      setForecastData(response.data)
-      toast.success('Weather loaded successfully!')
-    } catch (error) {
-      console.error('Error fetching forecast:', error)
-      setForecastData(null)
-      toast.error('Failed to fetch weather.')
-    }
-  }
-
-  function handleSearch() {
-  if (input.trim() !== '') {
-    setLocation(input.trim())
-    setInput('')         
-  }
-}
-
-  function handleDaysChange(e) {
-    setDays(Number(e.target.value))
-  }
-
-  return (
-    <div>
-      <h2>Weather Forecast</h2>
-      <input
-        type="text"
-        placeholder="Enter location"
-        value={input}
-        onChange={e => setInput(e.target.value)}
-        onKeyDown={e => { if (e.key === 'Enter') handleSearch() }}
-      />
-      <button onClick={handleSearch}>Search</button>
-      <Box component="span">
-        <button
-          onClick={() => toggleFavorite(location)}
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            color: favorites.includes(location) ? 'red' : 'grey',
-          }}
-          aria-label={favorites.includes(location) ? 'Remove from favorites' : 'Add to favorites'}
-        >
-          <Favorite />
-        </button>
-      </Box>
-      <label>
-        Days:
-        <select value={days} onChange={handleDaysChange}>
-          {[1, 2, 3].map(d => (
-            <option key={d} value={d}>{d}</option>
-          ))}
-        </select>
-      </label>
-
-      {forecastData && forecastData.location && forecastData.forecast && forecastData.forecast.forecastday ? (
-        <div>
-          <h3>
-            Forecast for {forecastData.location.name}, {forecastData.location.region}
-          </h3>
-          {forecastData.forecast.forecastday.map(day => (
-            <div
-              key={day.date}
-              style={{ borderBottom: '1px solid #ccc', marginBottom: '8px', paddingBottom: '6px' }}
-            >
-              <strong>{day.date}</strong>
-              <p>Min Temperature: {day.day.mintemp_f}°F</p>
-              <p>Max Temperature: {day.day.maxtemp_f}°F</p>
-              <p>Humidity: {day.day.avghumidity}%</p>
-              <p>Avg Temperature: {day.day.avgtemp_f}°F</p>
-              <img src={day.day.condition.icon} alt={day.day.condition.text} />
-              <p>Chance of rain: {day.day.daily_chance_of_rain}%</p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>No forecast data available for "{location}"</p>
-      )}
-    </div>
-  )
-}
 
 function FavoritesList({ favorites, setLocation, toggleFavorite }) {
   if (!favorites.length) return null
   return (
-    <div>
+    <div style={{ marginBottom: 16 }}>
       <h4>Favorites:</h4>
       {favorites.map(fav => (
         <span key={fav} style={{ marginRight: '12px' }}>
@@ -190,7 +19,9 @@ function FavoritesList({ favorites, setLocation, toggleFavorite }) {
               border: 'none',
               color: '#115088',
               fontWeight: 'bold',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              padding: 0,
+              fontSize: '1rem',
             }}
           >
             {fav}
@@ -201,7 +32,10 @@ function FavoritesList({ favorites, setLocation, toggleFavorite }) {
               background: 'none',
               border: 'none',
               color: 'red',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              padding: '0 4px',
+              verticalAlign: 'middle',
+              fontSize: '1rem',
             }}
             aria-label="Remove from favorites"
             title="Remove from favorites"
@@ -237,37 +71,47 @@ export default function Weather() {
   }
 
   return (
-      <div
+    <div
       style={{
-        height: '100%',
+        minHeight: '100vh',
+        width: '100vw',
         backgroundImage: "url(https://www.weather.gov/images/tae/events/20200413/satellite_loop.gif)",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        position: 'static',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center', // vertical center
       }}
     >
-
-    <div>
-      <ToastContainer />
-      <FavoritesList
-        favorites={favorites}
-        setLocation={setLocation}
-        toggleFavorite={toggleFavorite}
+      <div
+        style={{
+          background: 'rgba(255,255,255,0.92)',
+          borderRadius: 14,
+          boxShadow: '0 4px 30px rgba(0,0,0,0.14)',
+          padding: '24px 18px',
+          minWidth: 340,
+          maxWidth: 480,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <ToastContainer />
+        <FavoritesList
+          favorites={favorites}
+          setLocation={setLocation}
+          toggleFavorite={toggleFavorite}
         />
-      <RealTimeApi
-        location={location}
-        setLocation={setLocation}
-        favorites={favorites}
-        toggleFavorite={toggleFavorite}
+        <RealTimeApi
+          location={location}
+          setLocation={setLocation}
+          favorites={favorites}
+          toggleFavorite={toggleFavorite}
         />
-      <hr />
-      <ForeCastAPI
-        location={location}
-        setLocation={setLocation}
-        favorites={favorites}
-        toggleFavorite={toggleFavorite}
-        />
-        </div>
+        <hr style={{ width: '80%', margin: '24px 0' }} />
+        <ForeCastAPI location={location} />
+      </div>
     </div>
   )
 }
